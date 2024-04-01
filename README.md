@@ -4,6 +4,8 @@
   <img src="https://img.shields.io/badge/Support-Ukraine-FFD500?style=flat&labelColor=005BBB" alt="Support Ukraine - Help Provide Humanitarian Aid to Ukraine." />
 </a>
 
+### This repo is adapted from Detectron2 to work with [Foundational FSOD](https://github.com/anishmadan23/foundational_fsod/) 
+------------------
 Detectron2 is Facebook AI Research's next generation library
 that provides state-of-the-art detection and segmentation algorithms.
 It is the successor of
