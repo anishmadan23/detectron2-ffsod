@@ -59,6 +59,8 @@ _PREDEFINED_SPLITS_NUIMAGES["nuimages_all_cls_no_wc"] = {
     "nuimages_all_cls_train_no_wc": (f"{NUIMAGES_ROOT}/images/", f"{NUIMAGES_ANN_ROOT_NO_WC}/nuimages_v1.0-train.json"),
     "nuimages_all_cls_val_no_wc": (f"{NUIMAGES_ROOT}/images/", f"{NUIMAGES_ANN_ROOT_NO_WC}/nuimages_v1.0-val.json"),
     "nuimages_all_cls_val_no_wc_dummy": (f"{NUIMAGES_ROOT}/images/", f"{NUIMAGES_ANN_ROOT_NO_WC}/nuimages_dummy_v1.0-val.json"),
+    # "nuimages_all_cls_val_no_wc_challenge": (f"{NUIMAGES_ROOT}/images/", "/home/anishmad/msr_thesis/detic-lt3d/datasets/nuimages/annotations/ffsod_challenge/test_set/test_set.json"),
+    "nuimages_all_cls_val_no_wc_challenge": (f"/data3/anishmad/data/nuimages_challenge/test_set_images/", "/home/anishmad/msr_thesis/detic-lt3d/data/datasets/nuimages_challenge/test_set_challenge_new.json"),
 
 }
 

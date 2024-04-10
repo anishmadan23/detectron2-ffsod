@@ -150,7 +150,6 @@ class COCOEvaluator(DatasetEvaluator):
 
         with contextlib.redirect_stdout(io.StringIO()):
             self._coco_api = COCO(json_file)
-
         # Test set json files do not contain annotations (evaluation must be
         # performed using the COCO evaluation server).
         self._do_evaluation = "annotations" in self._coco_api.dataset
@@ -206,6 +205,10 @@ class COCOEvaluator(DatasetEvaluator):
             file_path = os.path.join(self._output_dir, "instances_predictions.pth")
             with PathManager.open(file_path, "wb") as f:
                 torch.save(predictions, f)
+
+            with open(os.path.join(self._output_dir, "instances_predictions.pkl"),'wb') as f:
+                pickle.dump(predictions, f)
+
 
         self._results = OrderedDict()
         if "proposals" in predictions[0]:
