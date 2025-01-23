@@ -29,6 +29,12 @@ from .coco_panoptic import register_coco_panoptic, register_coco_panoptic_separa
 from .lvis import get_lvis_instances_meta, register_lvis_instances
 from .pascal_voc import register_pascal_voc
 
+
+
+
+
+
+
 # ==== Predefined datasets and splits for COCO ==========
 
 _PREDEFINED_SPLITS_COCO = {}
@@ -40,6 +46,15 @@ _PREDEFINED_SPLITS_COCO["coco"] = {
     "coco_2017_test-dev": ("/home/anishmad/msr_thesis/glip/DATASET/coco/test2017", "/home/anishmad/msr_thesis/glip/DATASET/coco/annotations/image_info_test-dev2017.json"),
     "coco_2017_val_100": ("/home/anishmad/msr_thesis/glip/DATASET/coco/val2017", "/home/anishmad/msr_thesis/glip/DATASET/coco/annotations/instances_val2017_100.json"),
 }
+
+LIVER_DISEASE_ROOT = '/data3/anishmad/roboflow_data/liver_disease'
+
+_PREDEFINED_SPLITS_LIVER_DISEASE = {
+    "liver_all_cls_train": (f"{LIVER_DISEASE_ROOT}/train/", f"{LIVER_DISEASE_ROOT}/train/_annotations.coco.json"),
+    "liver_all_cls_val": (f"{LIVER_DISEASE_ROOT}/val/", f"{LIVER_DISEASE_ROOT}/val/_annotations.coco.json"),
+    "liver_all_cls_test": (f"{LIVER_DISEASE_ROOT}/test/", f"{LIVER_DISEASE_ROOT}/test/_annotations.coco.json"),
+}
+
 
 NUIMAGES_ROOT = '/home/anishmad/msr_thesis/detic-lt3d/data/datasets/nuimages'
 NUIMAGES_ANN_ROOT_NO_WC = '/home/anishmad/msr_thesis/detic-lt3d/datasets/nuimages/annotations/no_wc'
@@ -61,7 +76,9 @@ _PREDEFINED_SPLITS_NUIMAGES["nuimages_all_cls_no_wc"] = {
     "nuimages_all_cls_val_no_wc_dummy": (f"{NUIMAGES_ROOT}/images/", f"{NUIMAGES_ANN_ROOT_NO_WC}/nuimages_dummy_v1.0-val.json"),
     # "nuimages_all_cls_val_no_wc_challenge": (f"{NUIMAGES_ROOT}/images/", "/home/anishmad/msr_thesis/detic-lt3d/datasets/nuimages/annotations/ffsod_challenge/test_set/test_set.json"),
     "nuimages_all_cls_val_no_wc_challenge": (f"/data3/anishmad/data/nuimages_challenge/test_set_images/", "/home/anishmad/msr_thesis/detic-lt3d/data/datasets/nuimages_challenge/test_set_challenge_new.json"),
-
+    "nuimages_all_cls_train_10_shots_no_wc_challenge": (f"/data3/anishmad/data/nuimages_challenge/training_split_10_shots/", "/home/anishmad/msr_thesis/detic-lt3d/data/datasets/nuimages_challenge/10_shots/nuimages_fsod_train_shots_10.json"),
+    "nuimages_all_cls_val_10_shots_no_wc_challenge": (f"{NUIMAGES_ROOT}/images/", "/home/anishmad/msr_thesis/detic-lt3d/data/datasets/nuimages_support/fsod_data_10_seeds_detectron_best_split/no_wc/nuimages_fsod_val_shots_10.json"),
+    "nuimages_all_cls_val_no_wc_challenge_dummy": (f"{NUIMAGES_ROOT}/images/", f"{NUIMAGES_ANN_ROOT_NO_WC}/nuimages_dummy_v1.0-val.json"),
 }
 
 fsod_shots = [5,10,30]
@@ -138,6 +155,18 @@ def register_all_coco(root):
 
 def register_all_nuimages(root):
     for dataset_name, splits_per_dataset in _PREDEFINED_SPLITS_NUIMAGES.items():
+        for key, (image_root, json_file) in splits_per_dataset.items():
+            # Assume pre-defined datasets live in `./datasets`.
+            register_coco_instances(
+                key,
+                _get_builtin_metadata(dataset_name),
+                json_file,   # using absolute paths
+                image_root,   # using absolute paths
+                offset_in_category=0,           # due to modified annotations
+            )
+
+def register_all_liver_disease(root):
+    for dataset_name, splits_per_dataset in _PREDEFINED_SPLITS_LIVER_DISEASE.items():
         for key, (image_root, json_file) in splits_per_dataset.items():
             # Assume pre-defined datasets live in `./datasets`.
             register_coco_instances(

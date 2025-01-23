@@ -144,7 +144,7 @@ class COCOEvaluator(DatasetEvaluator):
         json_file = PathManager.get_local_path(self._metadata.json_file)
 
         ### added for some special evaluation 
-        if "fsod" in json_file:
+        if "fsod" in json_file:                                    # make sure fsod and fiod data file registration names mathc for this logic to work
             json_file = json_file.replace("fsod_data", "fiod_data")
             json_file = json_file.replace("nuimages_fsod", "nuimages_fiod") 
 
