@@ -46,6 +46,14 @@ _PREDEFINED_SPLITS_COCO["coco"] = {
     "coco_2017_test-dev": ("/home/anishmad/msr_thesis/glip/DATASET/coco/test2017", "/home/anishmad/msr_thesis/glip/DATASET/coco/annotations/image_info_test-dev2017.json"),
     "coco_2017_val_100": ("/home/anishmad/msr_thesis/glip/DATASET/coco/val2017", "/home/anishmad/msr_thesis/glip/DATASET/coco/annotations/instances_val2017_100.json"),
 }
+FLIR_CAMERA_OBJECTS_ROOT = '/data3/anishmad/roboflow_data/flir_camera_objects/'
+
+_PREDEFINED_SPLITS_FLIR_CAMERA_OBJECTS = {
+    "flir_camera_objects_all_cls_train": (f"{FLIR_CAMERA_OBJECTS_ROOT}/train/", f"{FLIR_CAMERA_OBJECTS_ROOT}/train/_annotations.coco.json"),
+    "flir_camera_objects_all_cls_val": (f"{FLIR_CAMERA_OBJECTS_ROOT}/val/", f"{FLIR_CAMERA_OBJECTS_ROOT}/val/_annotations.coco.json"),
+    "flir_camera_objects_all_cls_test": (f"{FLIR_CAMERA_OBJECTS_ROOT}/test/", f"{FLIR_CAMERA_OBJECTS_ROOT}/test/_annotations.coco.json"),
+}
+
 
 LIVER_DISEASE_ROOT = '/data3/anishmad/roboflow_data/liver_disease'
 
@@ -167,6 +175,17 @@ def register_all_nuimages(root):
 
 def register_all_liver_disease(root):
     for dataset_name, splits_per_dataset in _PREDEFINED_SPLITS_LIVER_DISEASE.items():
+        for key, (image_root, json_file) in splits_per_dataset.items():
+            # Assume pre-defined datasets live in `./datasets`.
+            register_coco_instances(
+                key,
+                _get_builtin_metadata(dataset_name),
+                json_file,   # using absolute paths
+                image_root,   # using absolute paths
+                offset_in_category=0,           # due to modified annotations
+            )
+def register_all_flir_camera_objects(root):
+    for dataset_name, splits_per_dataset in _PREDEFINED_SPLITS_FLIR_CAMERA_OBJECTS.items():
         for key, (image_root, json_file) in splits_per_dataset.items():
             # Assume pre-defined datasets live in `./datasets`.
             register_coco_instances(
