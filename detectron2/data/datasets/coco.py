@@ -461,7 +461,6 @@ def convert_to_coco_dict_with_dset(dataset_name, dataset_dicts):
     Returns:
         coco_dict: serializable dict in COCO json format
     """
-
     # dataset_dicts = DatasetCatalog.get(dataset_name)
     metadata = MetadataCatalog.get(dataset_name)
 
